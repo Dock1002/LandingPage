@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Controle de Acesso para Condomínios</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="active">Início</a>
+  <a href="#features">Funcionalidades</a>
+  <a href="#benefits">Benefícios</a>
+  <a href="#contact">Contato</a>
+</nav>
+
+<section id="hero" aria-label="Seção principal com informações e chamada para ação">
+  <div class="slides" role="list">
+    <div class="slide slide1 active" role="listitem" aria-hidden="false" tabindex="0">
+      Segurança Inteligente para Seu Condomínio
+    </div>
+    <div class="slide slide2" role="listitem" aria-hidden="true" tabindex="-1">
+      Controle de Acesso 24/7, Fácil e Prático
+    </div>
+    <div class="slide slide3" role="listitem" aria-hidden="true" tabindex="-1">
+      Monitoramento e Relatórios em Tempo Real
+    </div>
+  </div>
+  <button class="arrow left" aria-label="Slide anterior" tabindex="0">&#10094;</button>
+  <button class="arrow right" aria-label="Próximo slide" tabindex="0">&#10095;</button>
+
+  <div class="slider-dots" role="tablist" aria-label="Navegação dos slides">
+    <button class="dot active" role="tab" aria-selected="true" aria-controls="slide1" tabindex="0"></button>
+    <button class="dot" role="tab" aria-selected="false" aria-controls="slide2" tabindex="-1"></button>
+    <button class="dot" role="tab" aria-selected="false" aria-controls="slide3" tabindex="-1"></button>
+  </div>
+</section>
+
+<section id="features">
+  <h2>Funcionalidades</h2>
+  <div class="grid-2">
+    <div class="card" tabindex="0">
+      <h3>Controle de Entrada e Saída</h3>
+      <p>Gerencie quem entra e sai do condomínio em tempo real, com relatórios detalhados.</p>
+    </div>
+    <div class="card" tabindex="0">
+      <h3>Cadastro de Moradores e Visitantes</h3>
+      <p>Registre moradores, visitantes e prestadores de serviço com facilidade e segurança.</p>
+    </div>
+    <div class="card" tabindex="0">
+      <h3>Consulta de Dados </h3>
+      <p>Tenha seus dados sempre salvos e seguros no nosso sistema.</p>
+    </div>
+    <div class="card" tabindex="0">
+      <h3>Alertas Personalizados</h3>
+      <p>Receba notificações em caso de eventos suspeitos ou acesso não autorizado.</p>
+    </div>
+  </div>
+</section>
+
+<section id="benefits">
+  <h2>Benefícios</h2>
+  <div class="grid-2">
+    <div class="card" tabindex="0">
+      <h3>Mais Segurança</h3>
+      <p>Evite invasões e mantenha o controle rigoroso do acesso ao seu condomínio.</p>
+    </div>
+    <div class="card" tabindex="0">
+      <h3>Facilidade de Uso</h3>
+      <p>Interface intuitiva que permite rápida adaptação dos porteiros e moradores.</p>
+    </div>
+    <div class="card" tabindex="0">
+      <h3>Economia de Tempo</h3>
+      <p>Automatize processos manuais e otimize a gestão do condomínio.</p>
+    </div>
+    <div class="card" tabindex="0">
+      <h3>Suporte Especializado</h3>
+      <p>Equipe pronta para ajudar sempre que precisar.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Saiba Mais</h2>
+  <div class="card" style="max-width: 700px; margin: 0 auto; text-align: center; padding: 40px;">
+    <p style="font-size: 1.2rem; margin-bottom: 25px; color: #396481;">
+      Descubra como nosso sistema pode transformar a segurança e a gestão do seu condomínio. Com tecnologia de ponta, suporte especializado e uma interface intuitiva, estamos prontos para ajudar você a dar o próximo passo em direção a um ambiente mais seguro e eficiente.
+    </p>
+    <button onclick="window.location.href='#features'" style="background: #5ab0f0; border: none; padding: 16px 40px; font-size: 1.2rem; font-weight: bold; color: white; border-radius: 35px; cursor: pointer; box-shadow: 0 5px 15px rgba(90,176,240,0.6); transition: 0.3s;">
+      Conhecer Funcionalidades
+    </button>
+  </div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.querySelector('.arrow.left');
+  const nextBtn = document.querySelector('.arrow.right');
+  const navLinks = document.querySelectorAll('nav a');
+  const dots = document.querySelectorAll('.dot');
+  const nav = document.querySelector('nav');
+
+  let currentIndex = 0;
+  const slideCount = slides.length;
+  let slideInterval;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+      slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+      slide.tabIndex = i === index ? 0 : -1;
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+      dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      dot.tabIndex = i === index ? 0 : -1;
+    });
+
+    currentIndex = index;
+  }
+
+  function nextSlide() {
+    let nextIndex = (currentIndex + 1) % slideCount;
+    showSlide(nextIndex);
+  }
+
+  function prevSlide() {
+    let prevIndex = (currentIndex - 1 + slideCount) % slideCount;
+    showSlide(prevIndex);
+  }
+
+  prevBtn.addEventListener('click', () => {
+    prevSlide();
+    resetInterval();
+  });
+  nextBtn.addEventListener('click', () => {
+    nextSlide();
+    resetInterval();
+  });
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      showSlide(i);
+      resetInterval();
+    });
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      navLinks.forEach(l => l.classList.remove('active'));
+      e.target.classList.add('active');
+
+      const targetId = e.target.getAttribute('href').substring(1);
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        const yOffset = -60;
+        const yPosition = targetSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: yPosition, behavior: 'smooth' });
+      }
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    const fromTop = window.scrollY + 70;
+
+    navLinks.forEach(link => {
+      const section = document.querySelector(link.hash);
+      if (
+        section.offsetTop <= fromTop &&
+        section.offsetTop + section.offsetHeight > fromTop
+      ) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+
+    if (window.scrollY > 10) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  function resetInterval() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, 5000);
+  }
+
+  showSlide(currentIndex);
+  slideInterval = setInterval(nextSlide, 5000);
+</script>
+
+</body>
+</html>
+ 
